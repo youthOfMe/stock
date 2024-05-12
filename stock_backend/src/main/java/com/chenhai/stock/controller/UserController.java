@@ -5,6 +5,9 @@ import com.chenhai.stock.service.UserService;
 import com.chenhai.stock.vo.req.LoginReqVo;
 import com.chenhai.stock.vo.res.LoginRespVo;
 import com.chenhai.stock.vo.res.R;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,10 @@ public class UserController {
      * @param userName 用户名称
      * @return 返回值
      */
+    @ApiOperation(value = "根据用户名查询用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", dataType = "string", required = true)
+    })
     @GetMapping("/user/{userName}")
     public SysUser getUserByUserName(@PathVariable String userName) {
         return userService.findByUserName(userName);
@@ -35,6 +42,7 @@ public class UserController {
      * @param loginReqVo 登录请求对象
      * @return 返回值
      */
+    @ApiOperation(value = "用户登录功能")
     @PostMapping("/login")
     public R<LoginRespVo> login(@RequestBody LoginReqVo loginReqVo) {
         return userService.login(loginReqVo);
@@ -44,6 +52,7 @@ public class UserController {
      * 获取验证码功能
      * @return 返回
      */
+    @ApiOperation("验证码生成")
     @GetMapping("/captcha")
     public R<Map> getCaptchaCode() {
         return userService.getCaptchaCode();
