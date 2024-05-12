@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         // 获取校验码
         String checkCode = captcha.getCode();
         // 获取经过base64编码处理的图片资源
-        String imageData = captcha.getImageBase64Data();
+        String imageData = captcha.getImageBase64();
         // 2. 生成sessionId 转化成string 避免前端精度丢失
         String sessionId = String.valueOf(idWorker.nextId());
         log.info("当前生成的图片校验码: {}, 会话ID: {}", checkCode, sessionId);
