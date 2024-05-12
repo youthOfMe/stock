@@ -6,10 +6,12 @@ import com.chenhai.stock.content.StockConstant;
 import com.chenhai.stock.mapper.SysUserMapper;
 import com.chenhai.stock.pojo.entity.SysUser;
 import com.chenhai.stock.service.UserService;
+import com.chenhai.stock.utils.IdWorker;
 import com.chenhai.stock.vo.req.LoginReqVo;
 import com.chenhai.stock.vo.res.LoginRespVo;
 import com.chenhai.stock.vo.res.R;
 import com.chenhai.stock.vo.res.ResponseCode;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service("userService")
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -31,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private IdWorker idWorker;
 
     /**
      * 根据用户名称查询用户信息
@@ -121,8 +129,19 @@ public class UserServiceImpl implements UserService {
         // 获取经过base64编码处理的图片资源
         String imageData = captcha.getImageBase64Data();
         // 2. 生成sessionId 转化成string 避免前端精度丢失
-        // String sessionId = String.valueOf()
+        String sessionId = String.valueOf(idWorker.nextId());
+        log.info("当前生成的图片校验码: {}, 会话ID: {}", checkCode, sessionId);
+        // 3. 将sessionId作为key, 校验码作为value保存在redis中
+        /**
+         * 使用redis模拟session的行为, 通过过期时间的设置
+         */
+        redisTemplate.opsForValue().set(StockConstant.CHECK_PREFIX + sessionId, checkCode, 5, TimeUnit.MINUTES);
+        // 4. 组装数据
+        Map<String, String> data = new HashMap<>();
+        data.put("imageData", imageData);
+        data.put("sessionId", sessionId);
 
-        return null;
+        // 5. 响应数据
+        return R.ok(data);
     }
 }
