@@ -2,11 +2,11 @@ package com.chenhai.stock.controller;
 
 import com.chenhai.stock.pojo.entity.SysUser;
 import com.chenhai.stock.service.UserService;
+import com.chenhai.stock.vo.req.LoginReqVo;
+import com.chenhai.stock.vo.res.LoginRespVo;
+import com.chenhai.stock.vo.res.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 定义用户处理器接口
@@ -26,6 +26,16 @@ public class UserController {
     @GetMapping("/user/{userName}")
     public SysUser getUserByUserName(@PathVariable String userName) {
         return userService.findByUserName(userName);
+    }
+
+    /**
+     * 用户登录功能
+     * @param loginReqVo 登录请求对象
+     * @return 返回值
+     */
+    @PostMapping("/login")
+    public R<LoginRespVo> login(@RequestBody LoginReqVo loginReqVo) {
+        return userService.login(loginReqVo);
     }
 
 }

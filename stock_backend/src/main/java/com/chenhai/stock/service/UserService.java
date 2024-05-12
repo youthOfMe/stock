@@ -1,6 +1,9 @@
 package com.chenhai.stock.service;
 
 import com.chenhai.stock.pojo.entity.SysUser;
+import com.chenhai.stock.vo.req.LoginReqVo;
+import com.chenhai.stock.vo.res.LoginRespVo;
+import com.chenhai.stock.vo.res.R;
 
 public interface UserService {
 
@@ -10,4 +13,11 @@ public interface UserService {
      * @return 返回值
      */
     SysUser findByUserName(String userName);
+
+    /**
+     * 用户登录
+     * @param loginReqVo 登录请求VO
+     * @return 返回值
+     */
+    R<LoginRespVo> login(LoginReqVo loginReqVo);
 }
