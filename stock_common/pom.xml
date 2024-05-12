@@ -35,7 +35,7 @@
 
         <!--json工具包-->
         <dependency>
-            <groupId>com.google.code.gson</groupId>
+            <groupId>com.google.code.gson</groupId>h
             <artifactId>gson</artifactId>
         </dependency>
 
