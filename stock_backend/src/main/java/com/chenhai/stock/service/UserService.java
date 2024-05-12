@@ -5,6 +5,8 @@ import com.chenhai.stock.vo.req.LoginReqVo;
 import com.chenhai.stock.vo.res.LoginRespVo;
 import com.chenhai.stock.vo.res.R;
 
+import java.util.Map;
+
 public interface UserService {
 
     /**
@@ -20,4 +22,10 @@ public interface UserService {
      * @return 返回值
      */
     R<LoginRespVo> login(LoginReqVo loginReqVo);
+
+    /**
+     * 获取验证码功能
+     * @return 返回值
+     */
+    R<Map> getCaptchaCode();
 }

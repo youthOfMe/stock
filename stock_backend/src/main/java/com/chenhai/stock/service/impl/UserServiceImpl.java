@@ -1,5 +1,7 @@
 package com.chenhai.stock.service.impl;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.chenhai.stock.content.StockConstant;
 import com.chenhai.stock.mapper.SysUserMapper;
 import com.chenhai.stock.pojo.entity.SysUser;
@@ -14,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.awt.*;
+import java.util.Map;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -80,5 +85,44 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(dbUser, respVo);
 
         return R.ok(respVo);
+    }
+
+    /**
+     * 获取验证码功能
+     * @return 返回值
+     */
+    @Override
+    public R<Map> getCaptchaCode() {
+        // 1. 生成图片验证码
+        /**
+         * 参数1: 图片的宽度
+         * 参数2: 图片高度
+         * 参数3: 图片中包含验证码的长度
+         * 参数4: 干扰线的数量
+         */
+        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(250, 40, 4, 5);
+        // 设置背景颜色
+        captcha.setBackground(Color.LIGHT_GRAY);
+        // 自定义生成校验码的规则
+        // captcha.setGenerator(new CodeGenerator() {
+        //     @Override
+        //     public String generate() {
+        //         return null;
+        //     }
+        //
+        //     @Override
+        //     public boolean verify(String s, String s1) {
+        //         return false;
+        //     }
+        // });
+
+        // 获取校验码
+        String checkCode = captcha.getCode();
+        // 获取经过base64编码处理的图片资源
+        String imageData = captcha.getImageBase64Data();
+        // 2. 生成sessionId 转化成string 避免前端精度丢失
+        // String sessionId = String.valueOf()
+
+        return null;
     }
 }

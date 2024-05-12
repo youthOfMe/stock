@@ -8,6 +8,8 @@ import com.chenhai.stock.vo.res.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 定义用户处理器接口
  */
@@ -36,6 +38,15 @@ public class UserController {
     @PostMapping("/login")
     public R<LoginRespVo> login(@RequestBody LoginReqVo loginReqVo) {
         return userService.login(loginReqVo);
+    }
+
+    /**
+     * 获取验证码功能
+     * @return 返回
+     */
+    @GetMapping("/captcha")
+    public R<Map> getCaptchaCode() {
+        return userService.getCaptchaCode();
     }
 
 }
