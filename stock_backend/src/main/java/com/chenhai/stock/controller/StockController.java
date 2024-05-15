@@ -20,6 +20,10 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    /**
+     * 获取国内大盘最新的数据
+     * @return
+     */
     @ApiOperation(value = "获取国内大盘最新数据", notes = "获取国内大盘最新的数据", httpMethod = "GET")
     @GetMapping("/index/all")
     public R<List<InnerMarketDomain>> getInnerMarketInfo() {
