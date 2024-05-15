@@ -1,7 +1,7 @@
 package com.chenhai.stock.vo.res;
 
 /**
- * @author by itheima
+ * @author by niuma
  * @Date 2021/12/21
  * @Description
  */

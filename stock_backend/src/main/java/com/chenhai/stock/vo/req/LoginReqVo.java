@@ -3,7 +3,7 @@ package com.chenhai.stock.vo.req;
 import lombok.Data;
 
 /**
- * @author by itheima
+ * @author by niuma
  * @Date 2021/12/30
  * @Description 登录请求vo
  */
