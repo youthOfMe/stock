@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(value = "/api/quot", tags = {"定义股票相关接口控制器"})
 @RestController
@@ -44,6 +45,12 @@ public class StockController {
     public R<PageResult<StockUpdownDomain>> getStockInfoByPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                                                                @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
         return stockService.getStockInfoByPage(page, pageSize);
+    }
+
+    @ApiOperation(value = "统计最新股票交易日每分钟的涨跌停的股票数量", notes = "统计最新股票交易日每分钟的涨跌停的股票数量", httpMethod = "GET")
+    @GetMapping("/stock/updown/count")
+    public R<Map<String, List>> getStockUpDownCount() {
+        return stockService.getStockUpDownCount();
     }
 
 
