@@ -106,4 +106,38 @@ public class StockServiceImpl implements StockService {
         // 6. 响应数据
         return R.ok(info);
     }
+
+    /**
+     * 统计大盘T日和T-1日每分钟交易量的统计
+     * @return
+     */
+    @Override
+    public R<Map<String, List>> getComparedStockTradeAmt() {
+        // 1. 获取股票最新的交易时间点(精确到分钟, 秒和毫秒设置为0)
+        // mock data 等后续完成job工程 再将代码删除即可
+        DateTime tEndDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
+        tEndDateTime = DateTime.parse("2022-01-03 14:40:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date tEndDate = tEndDateTime.toDate();
+        // 开盘时间
+        Date tStartDate = DateTimeUtil.getOpenDate(tEndDateTime).toDate();
+        // 2. 获取T-1日的时间范围
+        DateTime preTEndDateTime = DateTimeUtil.getPreviousTradingDay(tEndDateTime);
+        // mock data
+        preTEndDateTime = DateTime.parse("2022-01-02 14:40:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date preTEndDate = preTEndDateTime.toDate();
+        // 开盘时间
+        Date tPreStartDate = DateTimeUtil.getOpenDate(preTEndDateTime).toDate();
+        // 3. 调用mapper查询
+        // 3.1 统计T日
+        List<Map> tData = stockMarketIndexInfoMapper.getSumAmtInfo(tStartDate, tEndDate, stockInfoConfig.getInner());
+        // 3.2 统计T-1日
+        List<Map> preTData = stockMarketIndexInfoMapper.getSumAmtInfo(tPreStartDate, preTEndDate, stockInfoConfig.getInner());
+        // 4. 组装数据
+        HashMap<String, List> info = new HashMap<>();
+        info.put("amtList", tData);
+        info.put("yesAmtList", preTData);
+
+        // 5.响应数据
+        return R.ok(info);
+    }
 }

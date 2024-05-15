@@ -47,11 +47,23 @@ public class StockController {
         return stockService.getStockInfoByPage(page, pageSize);
     }
 
+    /**
+     * 统计最新股票交易日每分钟的涨跌停的股票数量
+     * @return
+     */
     @ApiOperation(value = "统计最新股票交易日每分钟的涨跌停的股票数量", notes = "统计最新股票交易日每分钟的涨跌停的股票数量", httpMethod = "GET")
     @GetMapping("/stock/updown/count")
     public R<Map<String, List>> getStockUpDownCount() {
         return stockService.getStockUpDownCount();
     }
 
-
+    /**
+     * 统计大盘T日和T-1日每分钟交易两的统计
+     * @return
+     */
+    @ApiOperation(value = "统计大盘T日和T-1日每分钟交易量的统计", notes = "统计大盘T日和T-1日每分钟交易量的统计", httpMethod = "GET")
+    @GetMapping("/stock/tradeAmt")
+    public R<Map<String, List>> getComparedStockTradeAmt() {
+        return stockService.getComparedStockTradeAmt();
+    }
 }

@@ -29,4 +29,10 @@ public interface StockService {
      * @return
      */
     R<Map<String, List>> getStockUpDownCount();
+
+    /**
+     * 统计大盘T日和T-1日每分钟交易量的统计
+     * @return
+     */
+    R<Map<String, List>> getComparedStockTradeAmt();
 }
