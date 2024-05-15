@@ -1,13 +1,16 @@
 package com.chenhai.stock.controller;
 
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.service.StockService;
+import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,5 +32,19 @@ public class StockController {
     public R<List<InnerMarketDomain>> getInnerMarketInfo() {
         return stockService.getInnerMarketInfo();
     }
+
+    /**
+     * 分页查询最新的股票交易数据
+     * @param page 当前页
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value = "分页查询最新的股票数据", notes = "分页查询最新的股票交易数据", httpMethod = "GET")
+    @GetMapping("/stock/all")
+    public R<PageResult<StockUpdownDomain>> getStockInfoByPage(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
+        return stockService.getStockInfoByPage(page, pageSize);
+    }
+
 
 }

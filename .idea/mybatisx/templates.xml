@@ -6,7 +6,7 @@
         <option name="generateConfig">
           <GenerateConfig>
             <option name="annotationType" value="NONE" />
-            <option name="basePackage" value="com.chnehai.stock.pojo" />
+            <option name="basePackage" value="com.chenhai.stock.pojo" />
             <option name="basePath" value="src/main/java" />
             <option name="classNameStrategy" value="camel" />
             <option name="encoding" value="UTF-8" />
@@ -48,8 +48,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="StockMarketIndexInfo" />
-                  <option name="tableName" value="stock_market_index_info" />
+                  <option name="className" value="StockRtInfo" />
+                  <option name="tableName" value="stock_rt_info" />
                 </TableUIInfo>
               </list>
             </option>
