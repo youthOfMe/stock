@@ -1,5 +1,6 @@
 package com.chenhai.stock.service.impl;
 
+import com.chenhai.stock.mapper.StockMarketIndexInfoMapper;
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
 import com.chenhai.stock.pojo.vo.StockInfoConfig;
 import com.chenhai.stock.service.StockService;
@@ -24,6 +25,9 @@ public class StockServiceImpl implements StockService {
     @Autowired
     private StockInfoConfig stockInfoConfig;
 
+    @Autowired
+    private StockMarketIndexInfoMapper stockMarketIndexInfoMapper;
+
     /**
      * 获取国内大盘最新数据
      * @return
@@ -37,8 +41,9 @@ public class StockServiceImpl implements StockService {
         // 2. 获取大盘编码集合
         List<String> mCodes = stockInfoConfig.getInner();
         // 3. 调用mapper查询数据
-        List<InnerMarketDomain> data;
+        List<InnerMarketDomain> data = stockMarketIndexInfoMapper.getMarketInfo(curDate, mCodes);
 
-        return null;
+        // 4. 封装被响应
+        return R.ok(data);
     }
 }
