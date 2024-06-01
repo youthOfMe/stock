@@ -35,4 +35,10 @@ public interface StockService {
      * @return
      */
     R<Map<String, List>> getComparedStockTradeAmt();
+
+    /**
+     * 统计最新交易时间点下股票 (A股) 在各个涨幅区间的数量
+     * @return
+     */
+    R<Map> getIncreaseRangeInfo();
 }

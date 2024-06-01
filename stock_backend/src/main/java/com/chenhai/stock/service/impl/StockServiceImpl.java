@@ -140,4 +140,18 @@ public class StockServiceImpl implements StockService {
         // 5.响应数据
         return R.ok(info);
     }
+
+    @Override
+    public R<Map> getIncreaseRangeInfo() {
+        // 1. 获取当前最新的股票交易时间点
+        DateTime curDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
+        // mock data
+        curDateTime = DateTime.parse("2022-01-06 09:55:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date curDate = curDateTime.toDate();
+        // 2. 调用mapper获取数据
+        List<Map> infos = stockRtInfoMapper.getIncreaceRangeInfoByDate(curDate);
+        // 获取有序的涨幅区间标题集合
+
+        return null;
+    }
 }

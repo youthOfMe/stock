@@ -16,7 +16,7 @@
             <option name="ignoreTablePrefix" value="" />
             <option name="ignoreTableSuffix" value="" />
             <option name="moduleName" value="stock_common" />
-            <option name="modulePath" value="$PROJECT_DIR$/stock_common" />
+            <option name="modulePath" value="$PROJECT_DIR$" />
             <option name="moduleUIInfoList">
               <list>
                 <ModuleInfoGo>
@@ -26,7 +26,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/stock_common" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="${domain.basePackage}.mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
@@ -36,7 +36,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.xml" />
-                  <option name="modulePath" value="$PROJECT_DIR$/stock_common" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="mapper" />
                 </ModuleInfoGo>
               </list>
@@ -48,8 +48,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="StockRtInfo" />
-                  <option name="tableName" value="stock_rt_info" />
+                  <option name="className" value="SysLog" />
+                  <option name="tableName" value="sys_log" />
                 </TableUIInfo>
               </list>
             </option>

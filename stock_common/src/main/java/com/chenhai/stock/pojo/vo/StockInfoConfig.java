@@ -22,4 +22,9 @@ public class StockInfoConfig {
      */
     private List<String> outer;
 
+    /**
+     * 股票涨幅区间标题合集
+     */
+    private List<String> upDownRange;
+
 }

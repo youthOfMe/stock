@@ -58,7 +58,7 @@ public class DateTimeUtil {
      * @return
      */
     public static String parseToString(DateTime dateTime, String pattern) {
-        return dateTime.toString();
+        return dateTime.toString(DateTimeFormat.forPattern(pattern));
     }
 
     /**
