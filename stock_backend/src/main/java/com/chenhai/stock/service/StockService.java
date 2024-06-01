@@ -1,6 +1,7 @@
 package com.chenhai.stock.service;
 
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
@@ -15,6 +16,12 @@ public interface StockService {
      * @return
      */
     R<List<InnerMarketDomain>> getInnerMarketInfo();
+
+    /**
+     * 获取国内板块指数数据
+     * @return
+     */
+    R<List<StockBlockRtInfoDomain>> getStockBlockRtInfo();
 
     /**
      * 分页查询最新的股票交易数据
@@ -41,4 +48,6 @@ public interface StockService {
      * @return
      */
     R<Map> getIncreaseRangeInfo();
+
+
 }

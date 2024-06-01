@@ -48,8 +48,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="SysLog" />
-                  <option name="tableName" value="sys_log" />
+                  <option name="className" value="StockBlockRtInfo" />
+                  <option name="tableName" value="stock_block_rt_info" />
                 </TableUIInfo>
               </list>
             </option>

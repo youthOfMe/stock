@@ -1,6 +1,7 @@
 package com.chenhai.stock.controller;
 
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.service.StockService;
 import com.chenhai.stock.vo.res.PageResult;
@@ -32,6 +33,16 @@ public class StockController {
     @GetMapping("/index/all")
     public R<List<InnerMarketDomain>> getInnerMarketInfo() {
         return stockService.getInnerMarketInfo();
+    }
+
+    /**
+     * 获取国内板块指数数据
+     * @return
+     */
+    @ApiOperation(value = "获取国内板块指数数据", notes = "获取国内板块指数数据", httpMethod = "GET")
+    @GetMapping("/sector/all")
+    public R<List<StockBlockRtInfoDomain>> getStockBlockRtInfo() {
+        return stockService.getStockBlockRtInfo();
     }
 
     /**

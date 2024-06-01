@@ -1,8 +1,10 @@
 package com.chenhai.stock.service.impl;
 
+import com.chenhai.stock.mapper.StockBlockRtInfoMapper;
 import com.chenhai.stock.mapper.StockMarketIndexInfoMapper;
 import com.chenhai.stock.mapper.StockRtInfoMapper;
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.pojo.vo.StockInfoConfig;
 import com.chenhai.stock.service.StockService;
@@ -38,6 +40,11 @@ public class StockServiceImpl implements StockService {
     @Autowired
     private StockRtInfoMapper stockRtInfoMapper;
 
+    @Autowired
+    private StockBlockRtInfoMapper stockBlockRtInfoMapper;
+
+    @Autowired
+
     /**
      * 获取国内大盘最新数据
      * @return
@@ -55,6 +62,23 @@ public class StockServiceImpl implements StockService {
 
         // 4. 封装被响应
         return R.ok(data);
+    }
+
+    /**
+     * 获取国内板块指数数据
+     * @return
+     */
+    @Override
+    public R<List<StockBlockRtInfoDomain>> getStockBlockRtInfo() {
+        // 1. 获取股票最新的交易时间点(精确到分钟, 秒和毫秒设置为0)
+        // mock data 等后续完成job工程 再将代码删除即可
+        Date curDate = DateTimeUtil.getLastDate4Stock(DateTime.now()).toDate();
+        curDate = DateTime.parse("2021-12-21 14:30:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")).toDate();
+        // 调用mapper接口获取数据
+        List<StockBlockRtInfoDomain> stockBlockRtInfos = stockBlockRtInfoMapper.getStcokBlockRtInfo(curDate);
+
+
+        return R.ok(stockBlockRtInfos);
     }
 
     /**
@@ -149,9 +173,11 @@ public class StockServiceImpl implements StockService {
         curDateTime = DateTime.parse("2022-01-06 09:55:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
         Date curDate = curDateTime.toDate();
         // 2. 调用mapper获取数据
-        List<Map> infos = stockRtInfoMapper.getIncreaceRangeInfoByDate(curDate);
+        // List<Map> infos = stockRtInfoMapper.getIncreaceRangeInfoByDate(curDate);
         // 获取有序的涨幅区间标题集合
 
         return null;
     }
+
+
 }
