@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 股票服务的实现
@@ -178,23 +179,37 @@ public class StockServiceImpl implements StockService {
         // 获取有序的涨幅区间标题集合
         List<String> upDownRange = stockInfoConfig.getUpDownRange();
         // 将顺序的涨幅区间的元素转换为Map对象即可
-        List<Map<String, Object>> allInfos = new ArrayList<>();
-        for (String title : upDownRange) {
-            Map<String, Object> tmp = null;
-            for (Map info : infos) {
-                if(info.containsValue(title)) {
-                    tmp = info;
-                    break;
-                }
-            }
-            if (tmp == null) {
-                // 不存在, 则进行补齐
-                tmp = new HashMap<>();
+        // 方式一: 普通循环
+        // List<Map<String, Object>> allInfos = new ArrayList<>();
+        // for (String title : upDownRange) {
+        //     Map<String, Object> tmp = null;
+        //     for (Map info : infos) {
+        //         if(info.containsValue(title)) {
+        //             tmp = info;
+        //             break;
+        //         }
+        //     }
+        //     if (tmp == null) {
+        //         // 不存在, 则进行补齐
+        //         tmp = new HashMap<>();
+        //         tmp.put("count", 0);
+        //         tmp.put("title", title);
+        //     }
+        //     allInfos.add(tmp);
+        // }
+
+        // 方式2: stream遍历获取
+        List<Map> allInfos = upDownRange.stream().map(title -> {
+            Optional<Map> result = infos.stream().filter(map -> map.containsValue(title)).findFirst();
+            if (result.isPresent()) {
+                return result.get();
+            } else {
+                HashMap<String, Object> tmp = new HashMap<>();
                 tmp.put("count", 0);
                 tmp.put("title", title);
+                return tmp;
             }
-            allInfos.add(tmp);
-        }
+        }).collect(Collectors.toList());
 
         // 3. 组装数据
         HashMap<String, Object> data = new HashMap<>();
