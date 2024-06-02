@@ -198,7 +198,7 @@ public class StockServiceImpl implements StockService {
 
         // 3. 组装数据
         HashMap<String, Object> data = new HashMap<>();
-        data.put("time", curDate.toString());
+        data.put("time", curDateTime.toString("yyyy-MM-dd HH:mm:ss"));
         data.put("infos", allInfos);
 
         // 4. 响应
