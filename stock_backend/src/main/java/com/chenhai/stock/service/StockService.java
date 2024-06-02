@@ -1,9 +1,6 @@
 package com.chenhai.stock.service;
 
-import com.chenhai.stock.pojo.domain.InnerMarketDomain;
-import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
-import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
-import com.chenhai.stock.pojo.domain.StockUpdownDomain;
+import com.chenhai.stock.pojo.domain.*;
 import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
 
@@ -56,4 +53,11 @@ public interface StockService {
      * @return
      */
     R<List<Stock4MinuteDomain>> getStockScreenTimeSharing(String stockCode);
+
+    /**
+     * 统计指定股票的日K线数据
+     * @param stockCode
+     * @return
+     */
+    R<List<Stock4EvrDayDomain>> getStockScreenDkLine(String stockCode);
 }

@@ -3,10 +3,7 @@ package com.chenhai.stock.service.impl;
 import com.chenhai.stock.mapper.StockBlockRtInfoMapper;
 import com.chenhai.stock.mapper.StockMarketIndexInfoMapper;
 import com.chenhai.stock.mapper.StockRtInfoMapper;
-import com.chenhai.stock.pojo.domain.InnerMarketDomain;
-import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
-import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
-import com.chenhai.stock.pojo.domain.StockUpdownDomain;
+import com.chenhai.stock.pojo.domain.*;
 import com.chenhai.stock.pojo.vo.StockInfoConfig;
 import com.chenhai.stock.service.StockService;
 import com.chenhai.stock.utils.DateTimeUtil;
@@ -238,6 +235,28 @@ public class StockServiceImpl implements StockService {
         List<Stock4MinuteDomain> data = stockRtInfoMapper.getStock4MinuteInfo(openDate, endDate, stockCode);
         // 3. 返回
         return R.ok(data);
+    }
+
+    /**
+     * 统计指定股票的日K线数据
+     * @param stockCode
+     * @return
+     */
+    @Override
+    public R<List<Stock4EvrDayDomain>> getStockScreenDkLine(String stockCode) {
+        // 1. 获取统计的日K线的数据的时间范围
+        // 1.1 获取截止时间
+        DateTime endDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
+        endDateTime = DateTime.parse("2022-06-06 14:25:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date endDate = endDateTime.toDate();
+        // 1.2 起始时间
+        DateTime startDateTime = endDateTime.minusMonths(3);
+        startDateTime = DateTime.parse("2022-01-01 09:30:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date startDate = startDateTime.toDate();
+        // 2. 调用mapper获取指定日期范围馁的日K线的数据
+        List<Stock4EvrDayDomain> dkLineData = stockRtInfoMapper.getStock4DkLine(startDate, endDate, stockCode);
+        // 3. 返回
+        return R.ok(dkLineData);
     }
 
 

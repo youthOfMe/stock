@@ -1,14 +1,12 @@
 package com.chenhai.stock.controller;
 
-import com.chenhai.stock.pojo.domain.InnerMarketDomain;
-import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
-import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
-import com.chenhai.stock.pojo.domain.StockUpdownDomain;
+import com.chenhai.stock.pojo.domain.*;
 import com.chenhai.stock.service.StockService;
 import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,7 +87,7 @@ public class StockController {
     }
 
     /**
-     * 胡哦去指定股票T日的分时数据
+     * 获取指定股票T日的分时数据
      * @param stockCode
      * @return
      */
@@ -97,6 +95,17 @@ public class StockController {
     @GetMapping("/stock/screen/time-sharing")
     public R<List<Stock4MinuteDomain>> getStockScreenTimeSharing(@RequestParam(value = "code", required = true) String stockCode) {
         return stockService.getStockScreenTimeSharing(stockCode);
+    }
+
+    /**
+     * 统计指定股票的日K线数据
+     * @param stockCode
+     * @return
+     */
+    @ApiOperation(value = "统计指定股票的日K线数据", notes = "统计指定股票的日K线数据", httpMethod = "GET")
+    @GetMapping("/stock/screen/dkline")
+    public R<List<Stock4EvrDayDomain>> getStockScreenDkLine(@RequestParam(value = "code", required = true) String stockCode) {
+        return stockService.getStockScreenDkLine(stockCode);
     }
 
 }

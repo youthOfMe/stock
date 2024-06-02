@@ -1,5 +1,6 @@
 package com.chenhai.stock.mapper;
 
+import com.chenhai.stock.pojo.domain.Stock4EvrDayDomain;
 import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.pojo.entity.StockRtInfo;
@@ -55,4 +56,13 @@ public interface StockRtInfoMapper {
      * @return
      */
     List<Stock4MinuteDomain> getStock4MinuteInfo(@Param("startDate") Date openDate, @Param("endDate") Date endDate, @Param("stockCode") String stockCode);
+
+    /**
+     * 根据股票编码吗查询指定时间范围内的日K线数据
+     * @param startDate
+     * @param endDate
+     * @param stockCode
+     * @return
+     */
+    List<Stock4EvrDayDomain> getStock4DkLine(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("stockCode") String stockCode);
 }
