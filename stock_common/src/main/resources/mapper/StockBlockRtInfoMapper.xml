@@ -116,14 +116,14 @@
 
     <select id="getStcokBlockRtInfo" resultType="com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain">
         select
-            stri.company_num as companyNum,
+            stri.company_num,
             stri.trade_amount as tradeAmt,
             stri.label as code,
             stri.avg_price as avgPrice,
             stri.block_name as name,
             stri.cur_time as curDate,
             stri.trade_volume as tradeVol,
-            stri.updown_rate as updownRate
+            stri.updown_rate
         from stock_block_rt_info as stri
         where stri.cur_time = #{curDate}
     </select>

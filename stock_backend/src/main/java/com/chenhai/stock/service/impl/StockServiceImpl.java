@@ -19,10 +19,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 股票服务的实现
@@ -165,6 +162,10 @@ public class StockServiceImpl implements StockService {
         return R.ok(info);
     }
 
+    /**
+     * 统计最新交易时间点下股票（A股）在各个涨幅区间的数量
+     * @return
+     */
     @Override
     public R<Map> getIncreaseRangeInfo() {
         // 1. 获取当前最新的股票交易时间点
@@ -173,10 +174,35 @@ public class StockServiceImpl implements StockService {
         curDateTime = DateTime.parse("2022-01-06 09:55:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
         Date curDate = curDateTime.toDate();
         // 2. 调用mapper获取数据
-        // List<Map> infos = stockRtInfoMapper.getIncreaceRangeInfoByDate(curDate);
+        List<Map> infos = stockRtInfoMapper.getIncreaceRangeInfoByDate(curDate);
         // 获取有序的涨幅区间标题集合
+        List<String> upDownRange = stockInfoConfig.getUpDownRange();
+        // 将顺序的涨幅区间的元素转换为Map对象即可
+        List<Map<String, Object>> allInfos = new ArrayList<>();
+        for (String title : upDownRange) {
+            Map<String, Object> tmp = null;
+            for (Map info : infos) {
+                if(info.containsValue(title)) {
+                    tmp = info;
+                    break;
+                }
+            }
+            if (tmp == null) {
+                // 不存在, 则进行补齐
+                tmp = new HashMap<>();
+                tmp.put("count", 0);
+                tmp.put("title", title);
+            }
+            allInfos.add(tmp);
+        }
 
-        return null;
+        // 3. 组装数据
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("time", curDate.toString());
+        data.put("infos", allInfos);
+
+        // 4. 响应
+        return R.ok(data);
     }
 
 
