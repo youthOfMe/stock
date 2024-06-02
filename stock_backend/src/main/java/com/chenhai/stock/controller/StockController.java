@@ -1,6 +1,7 @@
 package com.chenhai.stock.controller;
 
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
 import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.service.StockService;
@@ -86,4 +87,16 @@ public class StockController {
     public R<Map> getIncreaseRangeInfo() {
         return stockService.getIncreaseRangeInfo();
     }
+
+    /**
+     * 胡哦去指定股票T日的分时数据
+     * @param stockCode
+     * @return
+     */
+    @ApiOperation(value = "获取指定股票T日的分时数据", notes = "胡哦去指定股票T日的分时数据", httpMethod = "GET")
+    @GetMapping("/stock/screen/time-sharing")
+    public R<List<Stock4MinuteDomain>> getStockScreenTimeSharing(@RequestParam(value = "code", required = true) String stockCode) {
+        return stockService.getStockScreenTimeSharing(stockCode);
+    }
+
 }

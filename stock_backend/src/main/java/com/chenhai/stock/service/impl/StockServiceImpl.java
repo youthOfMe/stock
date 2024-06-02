@@ -4,6 +4,7 @@ import com.chenhai.stock.mapper.StockBlockRtInfoMapper;
 import com.chenhai.stock.mapper.StockMarketIndexInfoMapper;
 import com.chenhai.stock.mapper.StockRtInfoMapper;
 import com.chenhai.stock.pojo.domain.InnerMarketDomain;
+import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
 import com.chenhai.stock.pojo.domain.StockBlockRtInfoDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.pojo.vo.StockInfoConfig;
@@ -217,6 +218,25 @@ public class StockServiceImpl implements StockService {
         data.put("infos", allInfos);
 
         // 4. 响应
+        return R.ok(data);
+    }
+
+    /**
+     * 获取指定股票T日的分时数据
+     * @param stockCode
+     * @return
+     */
+    @Override
+    public R<List<Stock4MinuteDomain>> getStockScreenTimeSharing(String stockCode) {
+        // 1. 获取T日最新股票交易时间点 endTime
+        DateTime endDateTime = DateTimeUtil.getLastDate4Stock(DateTime.now());
+        // mock data
+        endDateTime = DateTime.parse("2021-12-30 14:30:00", DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        Date endDate = endDateTime.toDate();
+        Date openDate = DateTimeUtil.getOpenDate(endDateTime).toDate();
+        // 2. 查询
+        List<Stock4MinuteDomain> data = stockRtInfoMapper.getStock4MinuteInfo(openDate, endDate, stockCode);
+        // 3. 返回
         return R.ok(data);
     }
 

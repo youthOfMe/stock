@@ -1,5 +1,6 @@
 package com.chenhai.stock.mapper;
 
+import com.chenhai.stock.pojo.domain.Stock4MinuteDomain;
 import com.chenhai.stock.pojo.domain.StockUpdownDomain;
 import com.chenhai.stock.pojo.entity.StockRtInfo;
 import org.apache.ibatis.annotations.Param;
@@ -45,4 +46,13 @@ public interface StockRtInfoMapper {
      * @return
      */
     List<Map> getIncreaceRangeInfoByDate(Date curDate);
+
+    /**
+     * 根据股票编码查询指定时间范围馁的日K先数据
+     * @param openDate
+     * @param endDate
+     * @param stockCode
+     * @return
+     */
+    List<Stock4MinuteDomain> getStock4MinuteInfo(@Param("startDate") Date openDate, @Param("endDate") Date endDate, @Param("stockCode") String stockCode);
 }

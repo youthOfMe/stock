@@ -191,4 +191,21 @@
         group by tmp2.title
         ]]>
     </select>
+
+    <select id="getStock4MinuteInfo" resultType="com.chenhai.stock.pojo.domain.Stock4MinuteDomain">
+        select
+            sri.cur_time as date,
+            sri.trade_amount as tradeAmt,
+            sri.stock_code as code,
+            sri.min_price as lowPrice,
+            sri.pre_close_price as preClosePrice,
+            sri.stock_name as name,
+            sri.max_price as highPrice,
+            sri.open_price as openPrice,
+            sri.trade_volume as tradeVol,
+            sri.cur_price as tradePrice
+        from stock_rt_info as sri
+        where sri.stock_code=#{stockCode}
+        and sri.cur_time between #{startDate} and #{endDate}
+    </select>
 </mapper>
