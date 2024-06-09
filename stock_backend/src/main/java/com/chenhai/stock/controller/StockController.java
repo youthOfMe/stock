@@ -6,13 +6,13 @@ import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +65,20 @@ public class StockController {
     @GetMapping("/stock/updown/count")
     public R<Map<String, List>> getStockUpDownCount() {
         return stockService.getStockUpDownCount();
+    }
+
+    /**
+     * 导出指定页码的最新股票信息
+     * @param page 当前页码
+     * @param pageSize 每页大小
+     * @param response 响应对象
+     */
+    @ApiOperation(value = "导出指定页码的最新股票信息", notes = "导出指定页码的最新股票信息", httpMethod = "GET")
+    @GetMapping("/stock/export")
+    public void exportStockUpDownInfo(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                      @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                                      HttpServletResponse response) {
+        stockService.exportStockUpDownInfo(page, pageSize, response);
     }
 
     /**

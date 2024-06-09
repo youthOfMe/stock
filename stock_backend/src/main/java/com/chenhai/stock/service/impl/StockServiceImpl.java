@@ -17,6 +17,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -257,6 +259,35 @@ public class StockServiceImpl implements StockService {
         List<Stock4EvrDayDomain> dkLineData = stockRtInfoMapper.getStock4DkLine(startDate, endDate, stockCode);
         // 3. 返回
         return R.ok(dkLineData);
+    }
+
+    /**
+     * 导出指定页码的最新股票信息
+     * @param page 当前页码
+     * @param pageSize 每页大小
+     * @param response 响应对象
+     */
+    @Override
+    public void exportStockUpDownInfo(Integer page, Integer pageSize, HttpServletResponse response) {
+        // 1. 获取分页数据
+        R<PageResult<StockUpdownDomain>> r = this.getStockInfoByPage(page, pageSize);
+        List<StockUpdownDomain> rows = r.getData().getRows();
+
+        // 2. 将数据导出到excel中
+        // 2.1 设置响应excel文件格式类型
+        response.setContentType("application/vnd.ms-excel");
+        // 2.2 设置响应数据的编码格式
+        response.setCharacterEncoding("utf-8");
+        // 2.3 设置默认的文件名称
+        try {
+            // 进行设置URLEncoder.encode可以进行防止中文乱码, 和easyexcel没有关系
+            String fileName = URLEncoder.encode("stockRt", "UTF-8");
+            // 设置默认文件名称: 兼容一些特殊的浏览器
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

@@ -4,6 +4,7 @@ import com.chenhai.stock.pojo.domain.*;
 import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -60,4 +61,12 @@ public interface StockService {
      * @return
      */
     R<List<Stock4EvrDayDomain>> getStockScreenDkLine(String stockCode);
+
+    /**
+     * 导出指定页码的最新股票信息
+     * @param page 当前页码
+     * @param pageSize 每页大小
+     * @param response 响应对象
+     */
+    void exportStockUpDownInfo(Integer page, Integer pageSize, HttpServletResponse response);
 }
