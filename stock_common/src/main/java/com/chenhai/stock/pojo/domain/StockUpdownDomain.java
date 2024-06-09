@@ -29,7 +29,7 @@ public class StockUpdownDomain {
     private BigDecimal tradePrice;
 
     @ExcelProperty(value = {"股票涨幅信息统计表", "涨跌"}, index = 4)
-    private BigDecimal increace;
+    private BigDecimal increase;
 
     @ExcelProperty(value = {"股票涨幅信息统计表", "涨幅"}, index = 5)
     private BigDecimal upDown;

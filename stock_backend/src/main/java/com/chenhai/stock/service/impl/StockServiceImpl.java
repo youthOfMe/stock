@@ -1,5 +1,6 @@
 package com.chenhai.stock.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.chenhai.stock.mapper.StockBlockRtInfoMapper;
 import com.chenhai.stock.mapper.StockMarketIndexInfoMapper;
 import com.chenhai.stock.mapper.StockRtInfoMapper;
@@ -9,6 +10,8 @@ import com.chenhai.stock.service.StockService;
 import com.chenhai.stock.utils.DateTimeUtil;
 import com.chenhai.stock.vo.res.PageResult;
 import com.chenhai.stock.vo.res.R;
+import com.chenhai.stock.vo.res.ResponseCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -283,9 +287,24 @@ public class StockServiceImpl implements StockService {
             // 进行设置URLEncoder.encode可以进行防止中文乱码, 和easyexcel没有关系
             String fileName = URLEncoder.encode("stockRt", "UTF-8");
             // 设置默认文件名称: 兼容一些特殊的浏览器
-
+            response.setHeader("content-disposition", "attachment;filename" + fileName + ".xlsx");
+            // 4. 响应excel流
+            EasyExcel
+                    .write(response.getOutputStream(), StockUpdownDomain.class)
+                    .sheet("股票涨幅信息")
+                    .doWrite(rows);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error("当前页码: {}, 每页大小: {}, 当前时间: {}, 异常信息: {}", page, pageSize, DateTime.now().toString("yyyy-MM-dd"), e.getMessage());
+            // 通知前端异常, 稍后充实
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            R<Object> error = R.error(ResponseCode.ERROR);
+            try {
+                String jsonData = new ObjectMapper().writeValueAsString(error);
+                response.getWriter().write(jsonData);
+            } catch (IOException ex) {
+                log.error("响应错误信息失败, 时间: {}", DateTime.now().toString("yyyy-MM-dd HH:mm:ss"));
+            }
         }
 
     }
